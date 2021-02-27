@@ -1,0 +1,2 @@
+www.google.co.il,8.8.8.8,300
+mail.myweb.com,1.2.3.5,240

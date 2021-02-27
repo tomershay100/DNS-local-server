@@ -1,5 +1,6 @@
 import socket
 import sys
+import re
 import time
 
 my_port = int(str(sys.argv[1]))
@@ -28,20 +29,19 @@ while True:
                         for line2 in lines:
                             if line2.strip("\n") != line:
                                 if counter == 0:
-                                    f.write(line2[:-1])
+                                    f.write(line2.rstrip("\x00").rstrip())
                                 else:
-                                    f.write("\n" + line2[:-1])
+                                    f.write(line2.rstrip("\x00").rstrip())
                                 counter += 1
                     break
-            temp_str = line_arr[0] + "," + line_arr[1] + "," + line_arr[2]
+            temp_str = line_arr[0].lstrip() + "," + line_arr[1] + "," + line_arr[2].rstrip("\x00").rstrip()
             s.sendto(bytes(temp_str, "utf-8"), addr)
             count += 1
             break
     if count == 0:  # didnt find the address
-        if port_father == -1:
+        if ip_father == -1 or port_father == -1:
             break
-        s_parent = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s_parent.sendto(bytes(data.decode("utf-8"), "utf-8"), (ip_father, port_father))
-        data_from_father, addr_from_father = s_parent.recvfrom(1024)
+        s.sendto(bytes(data.decode("utf-8"), "utf-8"), (ip_father, port_father))
+        data_from_father, addr_from_father = s.recvfrom(1024)
         s.sendto(data_from_father, addr)
-        ips_file.write("\n" + data_from_father.decode("utf-8") + "," + str(time.time()))
+        ips_file.write("\n" + data_from_father.decode("utf-8").rstrip("\x00").rstrip().lstrip()+ "," + str(time.time()))
