@@ -27,4 +27,7 @@ Python implementation for DNS server and client. The server holds a ```.txt``` f
     $ python3 client.py 127.0.0.1 12345
     ```
     With "12345" as the server's port number (you can choose a free port as you like) and "127.0.0.1" as the server's IP.
-4. Enter the required domain as input next to the customer. For example, for "mail.google.com" the output will be 9.9.9.9 (as long as it is written in an ips.txt file)..
+4. Enter the required domain as input next to the customer. For example, for "mail.google.com" the output will be 9.9.9.9 (as long as it is written in an ips.txt file).
+
+
+You can run the client and the DNS servers on the same computer (different terminal) or on another computer on the same network.
